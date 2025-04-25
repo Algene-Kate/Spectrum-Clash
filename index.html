@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spectrum Clash</title>
+    <link rel="stylesheet" href="Style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="game-container">
+        <div id="welcome-screen">
+            <h1>Spectrum Clash</h1>
+            <div class="tagline">A colorful twist on the classic card game</div>
+
+            <div id="difficulty-selector">
+                <h3>Select Difficulty</h3>
+                <div class="difficulty-options">
+                    <button class="difficulty-btn selected" data-difficulty="easy">Easy</button>
+                    <button class="difficulty-btn" data-difficulty="medium">Medium</button>
+                    <button class="difficulty-btn" data-difficulty="hard">Hard</button>
+                </div>
+            </div>
+
+            <div class="menu-buttons">
+                <button id="play-ai-btn" class="pulse-btn">Play vs AI</button>
+                <button id="stats-btn">View Stats</button>
+                <button id="rules-btn">Game Rules</button>
+            </div>
+        </div>
+
+        <div id="game-screen" class="hidden">
+            <div class="game-header">
+                <div class="game-info">
+                    <h2>Spectrum Clash</h2>
+                    <div id="game-status">Your turn</div>
+                </div>
+                <div class="game-controls">
+                    <button id="menu-btn">Menu</button>
+                    <div id="turn-indicator">
+                        <div id="turn-direction">➡️</div>
+                        <div id="current-player">Your Turn</div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="opponent-area" class="player-area">
+                <div class="player-info">
+                    <div class="player-avatar ai-avatar"></div>
+                    <div class="player-details">
+                        <div class="player-name" id="opponent-name">AI Opponent</div>
+                        <div class="difficulty-badge" id="difficulty-level">Medium</div>
+                    </div>
+                </div>
+                <div class="card-count">
+                    <span id="opponent-card-count">7</span> cards
+                </div>
+                <div id="opponent-hand" class="hand"></div>
+                <div id="ai-thinking" class="hidden">
+                    <div class="thinking-dots">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                    <div>AI is thinking...</div>
+                </div>
+            </div>
+
+            <div id="play-area">
+                <div id="draw-pile" class="pile">
+                    <div class="card card-back"></div>
+                </div>
+                <div id="discard-pile" class="pile"></div>
+            </div>
+
+            <div id="player-area" class="player-area">
+                <div class="player-info">
+                    <div class="player-avatar player-avatar-human"></div>
+                    <div class="player-name">You</div>
+                </div>
+                <div class="card-count">
+                    <span id="player-card-count">7</span> cards
+                </div>
+                <div id="player-hand" class="hand"></div>
+            </div>
+
+            <div id="color-selector" class="hidden">
+                <h3>Choose a color</h3>
+                <div class="color-options">
+                    <div class="color-option" data-color="purple"></div>
+                    <div class="color-option" data-color="teal"></div>
+                    <div class="color-option" data-color="amber"></div>
+                    <div class="color-option" data-color="coral"></div>
+                </div>
+            </div>
+
+            <button id="uno-button" class="hidden pulse-animation">UNO!</button>
+        </div>
+
+        <div id="game-over-screen" class="hidden">
+            <h2>Game Over</h2>
+            <div id="winner-display"></div>
+            <div id="game-stats">
+                <h3>Game Statistics</h3>
+                <div id="stats-content"></div>
+            </div>
+            <div class="menu-buttons">
+                <button id="play-again-btn">Play Again</button>
+                <button id="main-menu-btn">Main Menu</button>
+            </div>
+        </div>
+
+        <div id="rules-screen" class="hidden">
+            <h2>How to Play</h2>
+            <div class="rules-content">
+                <h3>Game Objective</h3>
+                <p>Be the first player to get rid of all your cards by matching colors or numbers with the card on the
+                    discard pile.</p>
+
+                <h3>Getting Started</h3>
+                <p>1. Each player starts with 7 cards.</p>
+                <p>2. The top card of the draw pile is flipped to start the discard pile.</p>
+                <p>3. Players take turns clockwise, starting with you.</p>
+                <p>4. On your turn, you must play a card that matches either the color or number of the top card on the
+                    discard pile.</p>
+
+                <h3>Card Types</h3>
+                <div class="card-types">
+                    <div class="card-type">
+                        <div class="card-mini number-card"></div>
+                        <div><strong>Number Cards (0-9):</strong> Match by color or number</div>
+                    </div>
+                    <div class="card-type">
+                        <div class="card-mini skip-card"></div>
+                        <div><strong>Skip Card:</strong> Next player loses their turn</div>
+                    </div>
+                    <div class="card-type">
+                        <div class="card-mini reverse-card"></div>
+                        <div><strong>Reverse Card:</strong> Changes direction of play</div>
+                    </div>
+                    <div class="card-type">
+                        <div class="card-mini draw-two-card"></div>
+                        <div><strong>Draw Two Card:</strong> Next player draws 2 cards and loses their turn</div>
+                    </div>
+                    <div class="card-type">
+                        <div class="card-mini wild-card"></div>
+                        <div><strong>Wild Card:</strong> Play on any card and choose the next color</div>
+                    </div>
+                    <div class="card-type">
+                        <div class="card-mini wild-draw-four-card"></div>
+                        <div><strong>Wild Draw Four:</strong> Next player draws 4 cards and loses their turn</div>
+                    </div>
+                </div>
+
+                <h3>Special Rules</h3>
+                <ul>
+                    <li>When you have only one card left, you must click the "UNO" button or draw 2 penalty cards</li>
+                    <li>If you have no playable cards, you must draw a card from the draw pile</li>
+                    <li>If the drawn card can be played, you may play it immediately</li>
+                </ul>
+
+                <h3>Difficulty Levels</h3>
+                <ul>
+                    <li><strong>Easy:</strong> AI makes basic moves and often misses strategic opportunities</li>
+                    <li><strong>Medium:</strong> AI plays strategically and occasionally calls out missed UNOs</li>
+                    <li><strong>Hard:</strong> AI plays optimally, times its special cards perfectly, and always catches
+                        missed UNOs</li>
+                </ul>
+            </div>
+            <button id="rules-back-btn">Back to Menu</button>
+        </div>
+
+        <div id="stats-screen" class="hidden">
+            <h2>Player Statistics</h2>
+            <div class="stats-content">
+                <div class="stat-box">
+                    <h3>Game History</h3>
+                    <div id="game-history">
+                        <div>Games Played: <span id="games-played">0</span></div>
+                        <div>Wins: <span id="games-won">0</span></div>
+                        <div>Win Rate: <span id="win-rate">0%</span></div>
+                        <div>Current Streak: <span id="current-streak">0</span></div>
+                        <div>Best Streak: <span id="best-streak">0</span></div>
+                    </div>
+                </div>
+
+                <div class="stat-box">
+                    <h3>Play Style</h3>
+                    <div id="play-style">
+                        <div>Avg Turn Time: <span id="avg-turn-time">0.0s</span></div>
+                        <div>Favorite Color: <span id="favorite-color">None</span></div>
+                        <div>Special Cards Used: <span id="special-cards-used">0</span></div>
+                        <div>UNOs Called: <span id="unos-called">0</span></div>
+                        <div>UNOs Missed: <span id="unos-missed">0</span></div>
+                    </div>
+                </div>
+
+                <div class="stat-box">
+                    <h3>Difficulty Stats</h3>
+                    <div id="difficulty-stats">
+                        <div>Easy Wins: <span id="easy-wins">0</span></div>
+                        <div>Medium Wins: <span id="medium-wins">0</span></div>
+                        <div>Hard Wins: <span id="hard-wins">0</span></div>
+                    </div>
+                </div>
+
+                <div class="stat-box">
+                    <h3>Performance Insights</h3>
+                    <div id="performance-insights">
+                        <p id="insight-text">Complete a game to receive insights!</p>
+                    </div>
+                </div>
+            </div>
+            <button id="stats-back-btn">Back to Menu</button>
+        </div>
+    </div>
+
+    <div id="notification" class="hidden"></div>
+
+    <script src="Script.js"></script>
+</body>
+
+</html>
